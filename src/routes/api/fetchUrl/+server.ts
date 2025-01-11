@@ -1,5 +1,5 @@
 import type { RequestHandler } from '@sveltejs/kit';
-import linkPreviewGenerator from 'link-preview-generator';
+import { getLinkPreview } from 'link-preview-js';
 
 export const GET: RequestHandler = async ({ url }) => {
 	let targetUrl = url.searchParams.get('url');
@@ -12,7 +12,8 @@ export const GET: RequestHandler = async ({ url }) => {
 	}
 
 	try {
-		const previewData = await linkPreviewGenerator(targetUrl);
+		console.log({ targetUrl });
+		const previewData = await getLinkPreview(targetUrl, { followRedirects: 'follow' });
 
 		console.log({ previewData });
 
@@ -20,10 +21,10 @@ export const GET: RequestHandler = async ({ url }) => {
 			success: 1,
 			link: targetUrl,
 			meta: {
-				title: previewData.title,
-				description: previewData.description,
+				title: 'title' in previewData ? previewData.title : '',
+				description: 'description' in previewData ? previewData.description : '',
 				image: {
-					url: previewData.img
+					url: 'images' in previewData ? previewData.images[0] : ''
 				}
 			}
 		});

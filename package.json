@@ -40,6 +40,7 @@
 		"@auth/sveltekit": "^1.7.4",
 		"@editorjs/code": "^2.9.3",
 		"@editorjs/editorjs": "^2.30.7",
+		"link-preview-js": "^3.0.13",
 		"mongodb": "^6.12.0"
 	}
 }
